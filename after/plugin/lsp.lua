@@ -4,7 +4,8 @@ local lsp_signature = require('lsp_signature')
 lsp.preset("recommended")
 
 lsp.ensure_installed({
-	'gopls'
+	'gopls',
+    'pylsp'
 })
 
 -- Fix Undefined global 'vim'
