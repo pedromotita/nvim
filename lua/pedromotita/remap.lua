@@ -7,3 +7,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 vim.keymap.set("v", "<leader>y", "\"+y")
 vim.keymap.set("n", "<leader>y", "\"+y")
+
+
+vim.keymap.set("n", "<leader>co", vim.cmd.copen)
+vim.keymap.set("n", "<leader>cc", vim.cmd.cclose)
