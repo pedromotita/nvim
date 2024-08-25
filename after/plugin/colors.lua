@@ -3,6 +3,8 @@
 -- For light theme
 -- vim.o.background = 'light'
 
+vim.o.background = 'light'
+
 local c = require('vscode.colors').get_colors()
 require('vscode').setup({
     -- Alternatively set style in setup
@@ -29,4 +31,4 @@ require('vscode').setup({
         Cursor = { fg=c.vscDarkBlue, bg=c.vscLightGreen, bold=true },
     }
 })
-require('vscode').load()
+require('vscode').load('dark')

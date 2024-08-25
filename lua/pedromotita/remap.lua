@@ -11,3 +11,10 @@ vim.keymap.set("n", "<leader>y", "\"+y")
 
 vim.keymap.set("n", "<leader>co", vim.cmd.copen)
 vim.keymap.set("n", "<leader>cc", vim.cmd.cclose)
+
+local cmp = require 'cmp'
+cmp.setup({
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  }),
+})

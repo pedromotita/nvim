@@ -5,39 +5,36 @@ vim.cmd.packadd('packer.nvim')
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
+  
+  -- Packer
   use 'wbthomason/packer.nvim'
-  use 'theprimeagen/harpoon'
-  use 'ThePrimeagen/vim-be-good'
+
+  -- Colorschmes
+  use 'Mofiqul/adwaita.nvim'
+  use 'tomasiser/vim-code-dark'
   use 'Mofiqul/vscode.nvim'
-  use 'ray-x/lsp_signature.nvim'
+ 
+  -- Treesitter
+  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+
+  --  Harpoon
+  use 'theprimeagen/harpoon'
+
+  -- Telescope
   use {
       'nvim-telescope/telescope.nvim', tag = '0.1.3',
       -- or                            , branch = '0.1.x',
       requires = { {'nvim-lua/plenary.nvim'} }
   }
-  use {
-	  'VonHeikemen/lsp-zero.nvim',
-	  branch = 'v1.x',
-	  requires = {
-		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},
-		  {'williamboman/mason.nvim'},
-		  {'williamboman/mason-lspconfig.nvim'},
 
-		  -- Autocompletion
-		  {'hrsh7th/nvim-cmp'},
-		  {'hrsh7th/cmp-buffer'},
-		  {'hrsh7th/cmp-path'},
-		  {'saadparwaiz1/cmp_luasnip'},
-		  {'hrsh7th/cmp-nvim-lsp'},
-		  {'hrsh7th/cmp-nvim-lua'},
+  -- LSP (nvim native lsp client)
+  use 'neovim/nvim-lspconfig'
 
-		  -- Snippets
-		  {'L3MON4D3/LuaSnip'},
-		  {'rafamadriz/friendly-snippets'},
-	  }
-  }
-  use('tpope/vim-fugitive')
-  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+  -- Code completion
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/nvim-cmp'
+  use 'ray-x/lsp_signature.nvim'
+
+  -- Gitsigns
   use 'lewis6991/gitsigns.nvim'
 end)

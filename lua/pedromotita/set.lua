@@ -14,3 +14,5 @@ vim.opt.termguicolors = true
 vim.opt.colorcolumn = "120"
 
 vim.opt.cursorline = true
+
+vim.env.PATH = vim.env.VIM_PATH or vim.env.PATH
