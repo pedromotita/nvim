@@ -9,6 +9,9 @@ return require('packer').startup(function(use)
   -- Packer
   use 'wbthomason/packer.nvim'
 
+  -- Mason
+  use "williamboman/mason.nvim"
+
   -- Colorschmes
   use 'Mofiqul/adwaita.nvim'
   use 'tomasiser/vim-code-dark'

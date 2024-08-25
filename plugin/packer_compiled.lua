@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/Users/pedro.mota/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
     url = "https://github.com/ray-x/lsp_signature.nvim"
   },
+  ["mason.nvim"] = {
+    loaded = true,
+    path = "/Users/pedro.mota/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/Users/pedro.mota/.local/share/nvim/site/pack/packer/start/nvim-cmp",
