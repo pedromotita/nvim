@@ -14,6 +14,10 @@ return require('packer').startup(function(use)
 
   -- Colorschmes
   use 'Mofiqul/vscode.nvim'
+
+  -- Airline
+  use 'vim-airline/vim-airline'
+  use 'vim-airline/vim-airline-themes'
  
   -- Treesitter
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
