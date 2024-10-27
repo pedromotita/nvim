@@ -35,6 +35,9 @@ return require('packer').startup(function(use)
   -- LSP (nvim native lsp client)
   use 'neovim/nvim-lspconfig'
 
+  -- Code highlight
+  use 'RRethy/vim-illuminate'
+
   -- Code completion
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/nvim-cmp'
