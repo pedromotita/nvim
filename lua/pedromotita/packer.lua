@@ -13,8 +13,6 @@ return require('packer').startup(function(use)
   use "williamboman/mason.nvim"
 
   -- Colorschmes
-  use 'Mofiqul/adwaita.nvim'
-  use 'tomasiser/vim-code-dark'
   use 'Mofiqul/vscode.nvim'
  
   -- Treesitter
