@@ -1,55 +1,61 @@
-local lsp_signature = require('lsp_signature')
+local lspconfig = require("lspconfig")
 
-local on_attach = function(client, bufnr)
-  local opts = { noremap=true, silent=true, buffer=bufnr }
+lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
+    "force",
+    lspconfig.util.default_config.capabilities,
+    require("cmp_nvim_lsp").default_capabilities()
+)
+
+vim.api.nvim_create_autocmd("LspAttach", {
+    desc = "LSP actions",
+    callback = function(event)
+        local opts = { buffer = event.buf }
+
+        vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, opts)      -- Go to definition
+        vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, opts) -- Go to type definition
+        vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts)      -- View all references
+        vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, opts)  -- View all implementations
+        vim.keymap.set('n', '<leader>rs', vim.lsp.buf.rename, opts)          -- Rename Symbol
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)                    -- Show type hint
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)     -- Code actions
  
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
+        -- You can delete this if you enable format-on-save.
+        vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
 
-  vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, opts)      -- Go to definition
-  vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, opts) -- Go to type definition
+        require("lsp_signature").on_attach(event.client, event.bufnr)
+    end
+})
 
-  vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts)      -- View all references
-  vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, opts)  -- View all implementations
-
-  vim.keymap.set('n', '<leader>rs', vim.lsp.buf.rename, opts)          -- Rename Symbol
-
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)                    -- Show type hint
-
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)     -- Code actions
- 
-  -- You can delete this if you enable format-on-save.
-  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
-
-  -- Attach lsp signature
-  lsp_signature.on_attach(client, bufnr)
-
-end
- 
-local cmp = require 'cmp'
-cmp.setup({
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-    }),
-    mapping = {
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-        ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-        ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+require("mason").setup({})
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "gopls",
     }
 })
 
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- gopls setup
-require('lspconfig').gopls.setup {
-        cmd = {'gopls', '-remote=auto'},
-        on_attach = on_attach,
-        flags = {
-            -- Don't spam LSP with changes. Wait a second between each.
-            debounce_text_changes = 1000,
-        },
-        capabilities = lsp_capabilities,
-}
-
---thrift-ls setup
-require'lspconfig'.thriftls.setup{}
+require("mason-lspconfig").setup_handlers({
+    ["thriftls"] = function()
+        require("lspconfig")["thriftls"].setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+        })
+    end,
+    ["gopls"] = function()
+        require("lspconfig")["gopls"].setup({
+            cmd = {'/Users/pedro.mota/go/bin/gopls', '-remote=auto', '-rpc.trace', '-v'},
+            on_attach = on_attach,
+            capabilities = capabilities,
+            root_dir = function(fname)
+                return require("lspconfig.util").root_pattern("go_mod", ".git")(fname) or require("lspconfig.util").path.dirname(fname)
+            end,
+            init_options = {
+                staticcheck = true,
+            },
+            flags = {
+                -- Don't spam LSP with changes. Wait a second between each.
+                debounce_text_changes = 1000,
+            },
+            capabilities = lsp_capabilities,
+        })
+    end
+})
