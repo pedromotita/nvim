@@ -37,3 +37,7 @@ require('gitsigns').setup {
     col = 1
   },
 }
+
+local gitsigns = require 'gitsigns'
+
+vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
