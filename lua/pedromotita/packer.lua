@@ -13,6 +13,9 @@ return require('packer').startup(function(use)
     use 'vim-airline/vim-airline'
     use 'vim-airline/vim-airline-themes'
 
+    -- Colorschemes
+    use 'Mofiqul/vscode.nvim'
+
     --  Harpoon
     use 'theprimeagen/harpoon'
 
